@@ -1,5 +1,7 @@
 package com.dongdong.controller;
 
+import com.dongdong.consts.ResponseCode;
+import com.dongdong.consts.Result;
 import com.dongdong.entity.dao.UserTest;
 import com.dongdong.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +18,12 @@ public class RestTestController {
     private UserService userService;
 
     @GetMapping("/rest")
-    public List<UserTest> rest(){
-        return userService.getAllUsers();
+    public Result<List<UserTest>> rest(){
+        Result<List<UserTest>> result = new Result<List<UserTest>>();
+        result.setCode(ResponseCode.SUCCESS.getCode());
+        result.setMessage(ResponseCode.SUCCESS.getMessage());
+        result.setData(userService.getAllUsers());
+        result.setTimeStamp(Long.toString(System.currentTimeMillis()));
+        return result;
     }
 }
