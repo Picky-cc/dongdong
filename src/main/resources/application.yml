@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: dongdong
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/dongdong?useSSL=false&useUnicode=true&autoReconnect=true&characterEncoding=UTF-8
+    username: root
+    password: 329916
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+  thymeleaf:
+    prefix: classpath:/static/
+    suffix: .html
+    content-type: text/html
+    cache: false
+    mode: LEGACYHTML5
+    resources:
+      static-locations: classpath:/
+
+mybatis:
+  mapper-locations: classpath*:/mapper/*.xml
+  type-aliases-package: com.suidifu.credit.entity.dao
+  configuration:
+    default-enum-type-handler: org.apache.ibatis.type.EnumOrdinalTypeHandler
+
+server:
+  port: 8900
