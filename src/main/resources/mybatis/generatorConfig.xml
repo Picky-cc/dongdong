@@ -199,11 +199,11 @@
             <!--<generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" identity="true"/>-->
         <!--</table>-->
 
-        <table tableName = "user_test" enableInsert="true" enableSelectByPrimaryKey="true" enableSelectByExample = "false"
-            enableUpdateByPrimaryKey="false" enableDeleteByPrimaryKey="false" enableDeleteByExample = "false"
+        <table tableName = "person" enableInsert="true" enableSelectByPrimaryKey="true" enableSelectByExample = "false"
+            enableUpdateByPrimaryKey="true" enableDeleteByPrimaryKey="false" enableDeleteByExample = "false"
             enableCountByExample = "false" enableUpdateByExample = "false">
             <generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" identity="true"/>
-
+            <columnOverride column="sex" javaType="com.dongdong.entity.enumeration.SexEnum"/>
         </table>
 
     </context>

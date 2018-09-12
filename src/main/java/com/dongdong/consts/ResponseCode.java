@@ -6,6 +6,8 @@ public enum ResponseCode {
 
     REQUEST_METHOD_ERROR("1001", "Http请求方法错误"),
 
+    PARAMETER_ERROR("1002", "参数格式错误"),
+
     SYSTEM_ERROR("9999", "系统未知异常,请联系系统管理员");
 
     private String code;

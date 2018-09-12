@@ -7,15 +7,34 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.List;
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @RestControllerAdvice
 @Slf4j
 public class SystemExceptionHandler {
+
+    private static final Integer FIRST_ONE = 0;
+
+    @ResponseStatus(HttpStatus.OK)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @SuppressWarnings("unchecked")
+    public Result methodArgumentNotValidException(MethodArgumentNotValidException e) {
+        log.error("系统接口请求参数错误:{}", e);
+        BindingResult result = e.getBindingResult();
+        List<FieldError> fieldErrors = result.getFieldErrors();
+        String errorMessage = fieldErrors.get(FIRST_ONE).getDefaultMessage();
+        String timestamp = Long.toString(System.currentTimeMillis());
+        return new Result(ResponseCode.PARAMETER_ERROR.getCode(), errorMessage, timestamp, null);
+    }
 
     @ResponseStatus(HttpStatus.OK)
     @ExceptionHandler(BizException.class)

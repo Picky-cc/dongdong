@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dongdong.mapper.DepartmentMapper">
+  <resultMap id="BaseResultMap" type="com.dongdong.entity.dao.Department">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="department_uuid" jdbcType="VARCHAR" property="departmentUuid" />
+    <result column="department_name" jdbcType="VARCHAR" property="departmentName" />
+    <result column="department_code" jdbcType="VARCHAR" property="departmentCode" />
+    <result column="person_uuid" jdbcType="VARCHAR" property="personUuid" />
+    <result column="department_introduce" jdbcType="VARCHAR" property="departmentIntroduce" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, department_uuid, department_name, department_code, person_uuid, department_introduce, 
+    gmt_create, gmt_modified
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from department
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <insert id="insert" parameterType="com.dongdong.entity.dao.Department">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into department (department_uuid, department_name, department_code, 
+      person_uuid, department_introduce, gmt_create, 
+      gmt_modified)
+    values (#{departmentUuid,jdbcType=VARCHAR}, #{departmentName,jdbcType=VARCHAR}, #{departmentCode,jdbcType=VARCHAR}, 
+      #{personUuid,jdbcType=VARCHAR}, #{departmentIntroduce,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, 
+      #{gmtModified,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dongdong.entity.dao.Department">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into department
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="departmentUuid != null">
+        department_uuid,
+      </if>
+      <if test="departmentName != null">
+        department_name,
+      </if>
+      <if test="departmentCode != null">
+        department_code,
+      </if>
+      <if test="personUuid != null">
+        person_uuid,
+      </if>
+      <if test="departmentIntroduce != null">
+        department_introduce,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="departmentUuid != null">
+        #{departmentUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentName != null">
+        #{departmentName,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentCode != null">
+        #{departmentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="personUuid != null">
+        #{personUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentIntroduce != null">
+        #{departmentIntroduce,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dongdong.entity.dao.Department">
+    update department
+    <set>
+      <if test="departmentUuid != null">
+        department_uuid = #{departmentUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentName != null">
+        department_name = #{departmentName,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentCode != null">
+        department_code = #{departmentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="personUuid != null">
+        person_uuid = #{personUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentIntroduce != null">
+        department_introduce = #{departmentIntroduce,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dongdong.entity.dao.Department">
+    update department
+    set department_uuid = #{departmentUuid,jdbcType=VARCHAR},
+      department_name = #{departmentName,jdbcType=VARCHAR},
+      department_code = #{departmentCode,jdbcType=VARCHAR},
+      person_uuid = #{personUuid,jdbcType=VARCHAR},
+      department_introduce = #{departmentIntroduce,jdbcType=VARCHAR},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
