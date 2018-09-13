@@ -24,3 +24,7 @@ mybatis:
 
 server:
   port: 8900
+
+logging:
+  level:
+    com.onepro.custom.mapper: DEBUG

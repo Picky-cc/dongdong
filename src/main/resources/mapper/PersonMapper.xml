@@ -192,4 +192,13 @@
       gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <select id="selectByIdCard" parameterType="com.dongdong.entity.dao.Person" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from person
+    where
+    id_card_no = #{idCardNo,jdbcType=VARCHAR}
+    and person_name = #{personName,jdbcType=VARCHAR}
+  </select>
 </mapper>

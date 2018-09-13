@@ -25,7 +25,7 @@ public class PersonVO {
 
     private String departmentUuid;
 
-    @Pattern(regexp = "^[0-9]*$|^[0-9]+.[0-9]*$|^$", message = "薪资格式填写错误")
+    @Pattern(regexp = "^[0-9]*$|^[0-9]+.[0-9]{2}$|^$", message = "薪资格式填写错误")
     private String salary;
 
     @Pattern(regexp = "^(1[0-9]{2})[0-9]{8}$|^$", message = "手机号格式错误")

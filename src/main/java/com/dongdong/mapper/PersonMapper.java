@@ -14,4 +14,6 @@ public interface PersonMapper {
     int updateByPrimaryKeySelective(Person record);
 
     int updateByPrimaryKey(Person record);
+
+    Person selectByIdCard(Person person);
 }

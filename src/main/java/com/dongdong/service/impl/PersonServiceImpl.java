@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.util.Objects;
 import java.util.UUID;
 
 @Transactional
@@ -32,8 +33,14 @@ public class PersonServiceImpl implements PersonService {
             throw new BizException(ResponseCode.PARAMETER_ERROR.getCode(), ResponseCode.PARAMETER_ERROR.getMessage());
         }
         Person person = personBuilder.buildPersonByPersonVO(personVO);
-        person.setPersonUuid(UUID.randomUUID().toString());
-        person.setGmtCreate(person.getGmtModified());
-        personMapper.insert(person);
+        // 通过姓名身份证校验新增人员是否已经存在
+        Person oldPerson = personMapper.selectByIdCard(person);
+        if (Objects.isNull(oldPerson)) {
+            person.setPersonUuid(UUID.randomUUID().toString());
+            person.setGmtCreate(person.getGmtModified());
+            personMapper.insert(person);
+        } else {
+            throw new BizException(ResponseCode.PERSON_EXIST.getCode(), ResponseCode.PERSON_EXIST.getMessage());
+        }
     }
 }

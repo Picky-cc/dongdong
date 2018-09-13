@@ -8,6 +8,8 @@ public enum ResponseCode {
 
     PARAMETER_ERROR("1002", "参数格式错误"),
 
+    PERSON_EXIST("1003", "新增失败,该人员已存在"),
+
     SYSTEM_ERROR("9999", "系统未知异常,请联系系统管理员");
 
     private String code;
