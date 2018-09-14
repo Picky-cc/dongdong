@@ -16,6 +16,7 @@
     <result column="remark" jdbcType="VARCHAR" property="remark" />
     <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
     <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    <collection property="department" column="department_uuid" select="com.dongdong.mapper.DepartmentMapper.selectByUuid" />
   </resultMap>
   <sql id="Base_Column_List">
     id, person_uuid, person_name, id_card_no, sex, birth_day, address, department_uuid, 
@@ -130,12 +131,9 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.dongdong.entity.dao.Person">
+  <update id="updateByPersonUuid" parameterType="com.dongdong.entity.dao.Person">
     update person
     <set>
-      <if test="personUuid != null">
-        person_uuid = #{personUuid,jdbcType=VARCHAR},
-      </if>
       <if test="personName != null">
         person_name = #{personName,jdbcType=VARCHAR},
       </if>
@@ -173,7 +171,7 @@
         gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where id = #{id,jdbcType=BIGINT}
+    where person_uuid = #{personUuid,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.dongdong.entity.dao.Person">
     update person
@@ -200,5 +198,11 @@
     where
     id_card_no = #{idCardNo,jdbcType=VARCHAR}
     and person_name = #{personName,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByUuid" parameterType="com.dongdong.entity.vo.PersonVO" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from person
+    where person_uuid = #{personUuid,jdbcType=VARCHAR}
   </select>
 </mapper>

@@ -3,6 +3,7 @@ package com.dongdong.service.impl;
 import com.dongdong.builder.PersonBuilder;
 import com.dongdong.consts.ResponseCode;
 import com.dongdong.entity.dao.Person;
+import com.dongdong.entity.dto.PersonDTO;
 import com.dongdong.entity.vo.PersonVO;
 import com.dongdong.exception.BizException;
 import com.dongdong.mapper.PersonMapper;
@@ -29,7 +30,7 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public void createPerson(PersonVO personVO) throws BizException {
-        if (StringUtils.isEmpty(personVO.getPersonName()) || StringUtils.isEmpty(personVO.getIdCardNo())){
+        if (StringUtils.isEmpty(personVO.getPersonName()) || StringUtils.isEmpty(personVO.getIdCardNo())) {
             throw new BizException(ResponseCode.PARAMETER_ERROR.getCode(), ResponseCode.PARAMETER_ERROR.getMessage());
         }
         Person person = personBuilder.buildPersonByPersonVO(personVO);
@@ -42,5 +43,15 @@ public class PersonServiceImpl implements PersonService {
         } else {
             throw new BizException(ResponseCode.PERSON_EXIST.getCode(), ResponseCode.PERSON_EXIST.getMessage());
         }
+    }
+
+    @Override
+    public PersonDTO getPersonDTO(PersonVO personVO) throws BizException {
+        if (StringUtils.isEmpty(personVO.getPersonUuid())) {
+            throw new BizException(ResponseCode.PERSON_UUID_IS_NULL.getCode(),
+                    ResponseCode.PERSON_UUID_IS_NULL.getMessage());
+        }
+        Person person = personMapper.selectByUuid(personVO);
+        return Objects.isNull(person) ? null : personBuilder.buildDTOByPerson(person);
     }
 }

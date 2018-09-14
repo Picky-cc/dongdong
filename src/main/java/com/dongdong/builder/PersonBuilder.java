@@ -2,8 +2,10 @@ package com.dongdong.builder;
 
 import com.dongdong.consts.GlobalConst;
 import com.dongdong.entity.dao.Person;
+import com.dongdong.entity.dto.PersonDTO;
 import com.dongdong.entity.enumeration.SexEnum;
 import com.dongdong.entity.vo.PersonVO;
+import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -34,5 +36,25 @@ public class PersonBuilder {
         person.setRemark(personVO.getRemark());
         person.setGmtModified(new Date());
         return person;
+    }
+
+    public PersonDTO buildDTOByPerson(Person person) {
+        PersonDTO personDTO = new PersonDTO();
+        personDTO.setPersonUuid(person.getPersonUuid());
+        personDTO.setPersonName(person.getPersonName());
+        personDTO.setIdCardNo(person.getIdCardNo());
+        personDTO.setSex(Objects.isNull(person.getSex()) ? StringUtils.EMPTY : person.getSex().getValue());
+        personDTO.setBirthDay(new DateTime(person.getBirthDay()).toString(GlobalConst.DATE_FORMAT_DAY));
+        personDTO.setAddress(person.getAddress());
+        personDTO.setDepartmentUuid(person.getDepartmentUuid());
+        personDTO.setDepartmentName(Objects.isNull(person.getDepartment()) ? null :
+                person.getDepartment().getDepartmentName());
+        personDTO.setSalary(person.getSalary().toString());
+        personDTO.setPhoneNo(person.getPhoneNo());
+        personDTO.setEmail(person.getEmail());
+        personDTO.setRemark(person.getRemark());
+        personDTO.setGmtCreate(new DateTime(person.getGmtCreate()).toString(GlobalConst.DATE_FORMAT_DAY));
+        personDTO.setGmtModified(new DateTime(person.getGmtModified()).toString(GlobalConst.DATE_FORMAT_DAY));
+        return personDTO;
     }
 }

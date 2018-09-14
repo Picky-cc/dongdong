@@ -34,4 +34,6 @@ public class Person {
     private Date gmtCreate;
 
     private Date gmtModified;
+
+    private Department department;
 }

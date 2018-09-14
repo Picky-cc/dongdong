@@ -122,4 +122,17 @@
       gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <select id="selectByUuid" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from department
+    where department_uuid = #{departmentUuid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByName" parameterType="com.dongdong.entity.dao.Department" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from department
+    where
+    department_name = #{departmentName,jdbcType=VARCHAR}
+  </select>
 </mapper>

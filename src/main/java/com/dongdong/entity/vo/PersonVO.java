@@ -11,6 +11,8 @@ import javax.validation.constraints.Pattern;
 @NoArgsConstructor
 public class PersonVO {
 
+    private String personUuid;
+
     private String personName;
 
     private String idCardNo;
