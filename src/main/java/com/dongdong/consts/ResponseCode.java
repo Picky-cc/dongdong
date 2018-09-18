@@ -12,9 +12,11 @@ public enum ResponseCode {
 
     PERSON_UUID_IS_NULL("1004", "用户编码不能为空"),
 
-    CAN_NOT_FIND("1005", "查询结果不存在"),
+    DEPARTMENT_UUID_IS_NULL("1005", "部门编码不能为空"),
 
-    DEPARTMENT_EXIST("1006", "新增失败,该部门已存在"),
+    CAN_NOT_FIND("1006", "查询结果不存在"),
+
+    DEPARTMENT_EXIST("1007", "新增失败,该部门已存在"),
 
     SYSTEM_ERROR("9999", "系统未知异常,请联系系统管理员");
 

@@ -51,7 +51,7 @@ public class PersonServiceImpl implements PersonService {
             throw new BizException(ResponseCode.PERSON_UUID_IS_NULL.getCode(),
                     ResponseCode.PERSON_UUID_IS_NULL.getMessage());
         }
-        Person person = personMapper.selectByUuid(personVO);
+        Person person = personMapper.selectByUuid(personVO.getPersonUuid());
         return Objects.isNull(person) ? null : personBuilder.buildDTOByPerson(person);
     }
 }

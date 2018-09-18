@@ -10,6 +10,7 @@
     <result column="department_introduce" jdbcType="VARCHAR" property="departmentIntroduce" />
     <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
     <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    <collection property="person" column="person_uuid" select="com.dongdong.mapper.PersonMapper.selectByUuid" />
   </resultMap>
   <sql id="Base_Column_List">
     id, department_uuid, department_name, department_code, person_uuid, department_introduce, 

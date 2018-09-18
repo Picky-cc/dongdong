@@ -20,4 +20,6 @@ public class Department {
     private Date gmtCreate;
 
     private Date gmtModified;
+
+    private Person person;
 }

@@ -199,7 +199,7 @@
     id_card_no = #{idCardNo,jdbcType=VARCHAR}
     and person_name = #{personName,jdbcType=VARCHAR}
   </select>
-  <select id="selectByUuid" parameterType="com.dongdong.entity.vo.PersonVO" resultMap="BaseResultMap">
+  <select id="selectByUuid" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from person

@@ -18,5 +18,5 @@ public interface PersonMapper {
 
     Person selectByIdCard(Person person);
 
-    Person selectByUuid(PersonVO personVO);
+    Person selectByUuid(String personUuid);
 }
