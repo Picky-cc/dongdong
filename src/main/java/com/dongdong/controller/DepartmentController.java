@@ -26,6 +26,12 @@ public class DepartmentController {
     @Autowired
     private DepartmentService departmentService;
 
+    /**
+     * 新增部门接口
+     * @param departmentVO
+     * @return
+     * @throws BizException
+     */
     @PostMapping("/api/department/create")
     public Result<String> createDepartment(@RequestBody @Valid DepartmentVO departmentVO) throws BizException {
         log.info("{} 接口调用开始, 请求参数:{}", CREATE_DEPARTMENT, JSONObject.toJSONString(departmentVO));
@@ -35,6 +41,12 @@ public class DepartmentController {
                 Long.toString(System.currentTimeMillis()), null);
     }
 
+    /**
+     * 部门详情查询接口
+     * @param departmentVO
+     * @return
+     * @throws BizException
+     */
     @PostMapping("/api/department/getDepartment")
     public Result<DepartmentDTO> getDepartmentInfo(@RequestBody DepartmentVO departmentVO) throws BizException{
         log.info("{} 接口调用开始, 请求参数:{}", GET_DEPARTMENT_INFO, JSONObject.toJSONString(departmentVO));

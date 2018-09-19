@@ -54,4 +54,21 @@ public class PersonServiceImpl implements PersonService {
         Person person = personMapper.selectByUuid(personVO.getPersonUuid());
         return Objects.isNull(person) ? null : personBuilder.buildDTOByPerson(person);
     }
+
+    @Override
+    public void updatePerson(PersonVO personVO) throws BizException {
+        if (StringUtils.isEmpty(personVO.getPersonUuid())) {
+            throw new BizException(ResponseCode.PERSON_UUID_IS_NULL.getCode(),
+                    ResponseCode.PERSON_UUID_IS_NULL.getMessage());
+        }
+        Person person = personBuilder.buildPersonByPersonVO(personVO);
+        Person oldPerson = personMapper.selectByIdCard(person);
+        if (Objects.isNull(oldPerson)){
+            person.setPersonUuid(personVO.getPersonUuid());
+            personMapper.updateByPersonUuid(person);
+        } else {
+            throw new BizException(ResponseCode.PERSON_EXIST.getCode(), ResponseCode.PERSON_EXIST.getMessage());
+        }
+
+    }
 }

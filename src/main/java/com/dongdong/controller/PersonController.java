@@ -22,12 +22,14 @@ public class PersonController {
 
     private static final String CREATE_PERSON = "PersonController#createPerson";
     private static final String GET_PERSON = "PersonController#getPersonInfo";
+    private static final String UPDATE_PERSON = "PersonController#updatePersonInfo";
 
     @Autowired
     private PersonService personService;
 
     /**
      * 新增人员接口
+     *
      * @param personVO
      * @return
      * @throws BizException
@@ -46,16 +48,17 @@ public class PersonController {
 
     /**
      * 查询人员信息接口
+     *
      * @param personVO
      * @return
      * @throws BizException
      */
     @PostMapping("/api/person/getPerson")
-    public Result<PersonDTO> getPersonInfo(@RequestBody PersonVO personVO) throws BizException{
+    public Result<PersonDTO> getPersonInfo(@RequestBody PersonVO personVO) throws BizException {
         log.info("{} 接口调用开始,入参为:{}", GET_PERSON, JSONObject.toJSON(personVO));
         Result<PersonDTO> result = new Result<>();
         PersonDTO personDTO = personService.getPersonDTO(personVO);
-        if (Objects.isNull(personDTO)){
+        if (Objects.isNull(personDTO)) {
             result.setCode(ResponseCode.CAN_NOT_FIND.getCode());
             result.setMessage(ResponseCode.CAN_NOT_FIND.getMessage());
         } else {
@@ -68,4 +71,18 @@ public class PersonController {
         return result;
     }
 
+    /**
+     * 人员信息更改接口
+     * @param personVO
+     * @return
+     * @throws BizException
+     */
+    @PostMapping("/api/person/update")
+    public Result<String> updatePersonInfo(@RequestBody PersonVO personVO) throws BizException {
+        log.info("{} 接口调用开始,入参为:{}", UPDATE_PERSON, JSONObject.toJSON(personVO));
+        personService.updatePerson(personVO);
+        log.info("{} 接口调用成功.", UPDATE_PERSON);
+        return new Result<>(ResponseCode.SUCCESS.getCode(), ResponseCode.SUCCESS.getMessage(),
+                Long.toString(System.currentTimeMillis()), null);
+    }
 }

@@ -9,4 +9,6 @@ public interface PersonService {
     void createPerson(PersonVO personVO) throws BizException;
 
     PersonDTO getPersonDTO(PersonVO personVO) throws BizException;
+
+    void updatePerson(PersonVO personVO) throws BizException;
 }

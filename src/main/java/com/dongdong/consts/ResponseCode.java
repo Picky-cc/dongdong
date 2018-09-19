@@ -8,7 +8,7 @@ public enum ResponseCode {
 
     PARAMETER_ERROR("1002", "参数格式错误"),
 
-    PERSON_EXIST("1003", "新增失败,该人员已存在"),
+    PERSON_EXIST("1003", "处理失败,该人员已存在"),
 
     PERSON_UUID_IS_NULL("1004", "用户编码不能为空"),
 

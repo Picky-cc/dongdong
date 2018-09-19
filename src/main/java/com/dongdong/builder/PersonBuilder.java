@@ -25,12 +25,14 @@ public class PersonBuilder {
         SexEnum sex = Objects.isNull(SexEnum.getMap().get(personVO.getSex())) ? null :
                 SexEnum.getMap().get(personVO.getSex());
         person.setSex(sex);
-        DateTimeFormatter formatter = DateTimeFormat.forPattern(GlobalConst.DATE_FORMAT_DAY);
-        Date birthDay = DateTime.parse(personVO.getBirthDay(), formatter).toDate();
-        person.setBirthDay(birthDay);
+        if (!Objects.isNull(personVO.getBirthDay())) {
+            DateTimeFormatter formatter = DateTimeFormat.forPattern(GlobalConst.DATE_FORMAT_DAY);
+            Date birthDay = DateTime.parse(personVO.getBirthDay(), formatter).toDate();
+            person.setBirthDay(birthDay);
+        }
         person.setAddress(personVO.getAddress());
         person.setDepartmentUuid(personVO.getDepartmentUuid());
-        person.setSalary(new BigDecimal(personVO.getSalary()));
+        person.setSalary(Objects.isNull(personVO.getSalary()) ? null : new BigDecimal(personVO.getSalary()));
         person.setPhoneNo(personVO.getPhoneNo());
         person.setEmail(personVO.getEmail());
         person.setRemark(personVO.getRemark());
