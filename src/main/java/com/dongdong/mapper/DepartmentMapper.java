@@ -11,7 +11,7 @@ public interface DepartmentMapper {
 
     Department selectByPrimaryKey(Long id);
 
-    int updateByPrimaryKeySelective(Department record);
+    int updateByDepartmentUuid(Department record);
 
     int updateByPrimaryKey(Department record);
 

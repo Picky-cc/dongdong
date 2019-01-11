@@ -35,5 +35,7 @@ public class Person {
 
     private Date gmtModified;
 
+    private String version;
+
     private Department department;
 }

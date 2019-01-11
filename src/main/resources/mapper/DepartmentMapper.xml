@@ -10,11 +10,12 @@
     <result column="department_introduce" jdbcType="VARCHAR" property="departmentIntroduce" />
     <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
     <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    <result column="version" jdbcType="VARCHAR" property="version" />
     <collection property="person" column="person_uuid" select="com.dongdong.mapper.PersonMapper.selectByUuid" />
   </resultMap>
   <sql id="Base_Column_List">
     id, department_uuid, department_name, department_code, person_uuid, department_introduce, 
-    gmt_create, gmt_modified
+    gmt_create, gmt_modified, version
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -28,10 +29,10 @@
     </selectKey>
     insert into department (department_uuid, department_name, department_code, 
       person_uuid, department_introduce, gmt_create, 
-      gmt_modified)
+      gmt_modified, version)
     values (#{departmentUuid,jdbcType=VARCHAR}, #{departmentName,jdbcType=VARCHAR}, #{departmentCode,jdbcType=VARCHAR}, 
-      #{personUuid,jdbcType=VARCHAR}, #{departmentIntroduce,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, 
-      #{gmtModified,jdbcType=TIMESTAMP})
+      #{personUuid,jdbcType=VARCHAR}, #{departmentIntroduce,jdbcType=VARCHAR}, now(),
+      now(), uuid())
   </insert>
   <insert id="insertSelective" parameterType="com.dongdong.entity.dao.Department">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
@@ -60,6 +61,9 @@
       <if test="gmtModified != null">
         gmt_modified,
       </if>
+      <if test="version != null">
+        version,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="departmentUuid != null">
@@ -83,14 +87,14 @@
       <if test="gmtModified != null">
         #{gmtModified,jdbcType=TIMESTAMP},
       </if>
+      <if test="version != null">
+        #{version,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.dongdong.entity.dao.Department">
+  <update id="updateByDepartmentUuid" parameterType="com.dongdong.entity.dao.Department">
     update department
     <set>
-      <if test="departmentUuid != null">
-        department_uuid = #{departmentUuid,jdbcType=VARCHAR},
-      </if>
       <if test="departmentName != null">
         department_name = #{departmentName,jdbcType=VARCHAR},
       </if>
@@ -103,14 +107,11 @@
       <if test="departmentIntroduce != null">
         department_introduce = #{departmentIntroduce,jdbcType=VARCHAR},
       </if>
-      <if test="gmtCreate != null">
-        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="gmtModified != null">
-        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
-      </if>
+      gmt_modified = now(),
+      version = uuid()
     </set>
-    where id = #{id,jdbcType=BIGINT}
+    where department_uuid = #{departmentUuid,jdbcType=VARCHAR}
+    and version = #{version,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.dongdong.entity.dao.Department">
     update department
@@ -120,7 +121,8 @@
       person_uuid = #{personUuid,jdbcType=VARCHAR},
       department_introduce = #{departmentIntroduce,jdbcType=VARCHAR},
       gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
-      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      version = #{version,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
   <select id="selectByUuid" parameterType="java.lang.String" resultMap="BaseResultMap">

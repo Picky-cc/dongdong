@@ -9,4 +9,6 @@ public interface DepartmentService {
     void createDepartment(DepartmentVO departmentVO) throws BizException;
 
     DepartmentDTO getDepartmentDTO(DepartmentVO departmentVO) throws BizException;
+
+    void updateDepartment(DepartmentVO departmentVO) throws BizException;
 }

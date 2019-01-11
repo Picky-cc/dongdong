@@ -15,17 +15,16 @@ import java.util.Objects;
 @Component("departmentBuilder")
 public class DepartmentBuilder {
 
-    public Department buildeDepartmentByVO(DepartmentVO departmentVO){
+    public Department buildDepartmentByVO(DepartmentVO departmentVO){
         Department department = new Department();
         department.setDepartmentName(departmentVO.getDepartmentName());
         department.setDepartmentCode(departmentVO.getDepartmentCode());
         department.setDepartmentIntroduce(departmentVO.getDepartmentIntroduce());
         department.setPersonUuid(departmentVO.getPersonUuid());
-        department.setGmtModified(new Date());
         return department;
     }
 
-    public DepartmentDTO buildeDepartmentDTO(Department department){
+    public DepartmentDTO buildDepartmentDTO(Department department){
         DepartmentDTO departmentDTO = new DepartmentDTO();
         departmentDTO.setDepartmentUuid(department.getDepartmentUuid());
         departmentDTO.setDepartmentName(department.getDepartmentName());

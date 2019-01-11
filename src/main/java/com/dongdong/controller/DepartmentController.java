@@ -22,6 +22,7 @@ public class DepartmentController {
 
     private static final String CREATE_DEPARTMENT = "DepartmentController#createDepartment";
     private static final String GET_DEPARTMENT_INFO = "DepartmentController#getDepartmentInfo";
+    private static final String UPDATE_DEPARTMENT = "DepartmentController#updateDepartment";
 
     @Autowired
     private DepartmentService departmentService;
@@ -61,6 +62,22 @@ public class DepartmentController {
             result.setMessage(ResponseCode.SUCCESS.getMessage());
             result.setData(departmentDTO);
         }
+        log.info("{} 接口调用成功，结果:{}", GET_DEPARTMENT_INFO, JSONObject.toJSONString(departmentDTO));
         return result;
+    }
+
+    /**
+     * 部门更新接口
+     * @param departmentVO
+     * @return
+     * @throws BizException
+     */
+    @PostMapping("/api/department/update")
+    public Result<String> updateDepartment(@RequestBody DepartmentVO departmentVO) throws BizException {
+        log.info("{} 接口调用开始, 请求参数:{}", UPDATE_DEPARTMENT, JSONObject.toJSONString(departmentVO));
+        departmentService.updateDepartment(departmentVO);
+        log.info("{} 接口调用成功.", UPDATE_DEPARTMENT);
+        return new Result<>(ResponseCode.SUCCESS.getCode(), ResponseCode.SUCCESS.getMessage(),
+                Long.toString(System.currentTimeMillis()), null);
     }
 }

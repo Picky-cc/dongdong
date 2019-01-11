@@ -21,5 +21,7 @@ public class Department {
 
     private Date gmtModified;
 
+    private String version;
+
     private Person person;
 }

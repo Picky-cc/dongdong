@@ -16,11 +16,12 @@
     <result column="remark" jdbcType="VARCHAR" property="remark" />
     <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
     <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    <result column="version" jdbcType="VARCHAR" property="version" />
     <collection property="department" column="department_uuid" select="com.dongdong.mapper.DepartmentMapper.selectByUuid" />
   </resultMap>
   <sql id="Base_Column_List">
     id, person_uuid, person_name, id_card_no, sex, birth_day, address, department_uuid, 
-    salary, phone_no, email, remark, gmt_create, gmt_modified
+    salary, phone_no, email, remark, gmt_create, gmt_modified, version
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -36,12 +37,12 @@
       sex, birth_day, address, 
       department_uuid, salary, phone_no, 
       email, remark, gmt_create, 
-      gmt_modified)
+      gmt_modified, version)
     values (#{personUuid,jdbcType=VARCHAR}, #{personName,jdbcType=VARCHAR}, #{idCardNo,jdbcType=VARCHAR}, 
       #{sex,jdbcType=TINYINT}, #{birthDay,jdbcType=TIMESTAMP}, #{address,jdbcType=VARCHAR}, 
       #{departmentUuid,jdbcType=VARCHAR}, #{salary,jdbcType=DECIMAL}, #{phoneNo,jdbcType=VARCHAR}, 
-      #{email,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, 
-      #{gmtModified,jdbcType=TIMESTAMP})
+      #{email,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, now(),
+      now(), uuid())
   </insert>
   <insert id="insertSelective" parameterType="com.dongdong.entity.dao.Person">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
@@ -88,6 +89,9 @@
       <if test="gmtModified != null">
         gmt_modified,
       </if>
+      <if test="version != null">
+        version,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="personUuid != null">
@@ -129,6 +133,9 @@
       <if test="gmtModified != null">
         #{gmtModified,jdbcType=TIMESTAMP},
       </if>
+      <if test="version != null">
+        #{version,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <update id="updateByPersonUuid" parameterType="com.dongdong.entity.dao.Person">
@@ -164,14 +171,11 @@
       <if test="remark != null">
         remark = #{remark,jdbcType=VARCHAR},
       </if>
-      <if test="gmtCreate != null">
-        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="gmtModified != null">
-        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
-      </if>
+      gmt_modified = now(),
+      version = uuid()
     </set>
     where person_uuid = #{personUuid,jdbcType=VARCHAR}
+    and version = #{version,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.dongdong.entity.dao.Person">
     update person
@@ -187,7 +191,8 @@
       email = #{email,jdbcType=VARCHAR},
       remark = #{remark,jdbcType=VARCHAR},
       gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
-      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      version = #{version,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 

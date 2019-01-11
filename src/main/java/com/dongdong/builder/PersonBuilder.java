@@ -36,7 +36,6 @@ public class PersonBuilder {
         person.setPhoneNo(personVO.getPhoneNo());
         person.setEmail(personVO.getEmail());
         person.setRemark(personVO.getRemark());
-        person.setGmtModified(new Date());
         return person;
     }
 
