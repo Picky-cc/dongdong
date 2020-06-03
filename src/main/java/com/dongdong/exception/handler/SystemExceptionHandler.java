@@ -28,7 +28,7 @@ public class SystemExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @SuppressWarnings("unchecked")
     public Result methodArgumentNotValidException(MethodArgumentNotValidException e) {
-        log.error("系统接口请求参数错误:{}", e);
+        log.error("系统接口请求参数错误:{}", e.getMessage());
         BindingResult result = e.getBindingResult();
         List<FieldError> fieldErrors = result.getFieldErrors();
         String errorMessage = fieldErrors.get(FIRST_ONE).getDefaultMessage();
@@ -39,14 +39,14 @@ public class SystemExceptionHandler {
     @ResponseStatus(HttpStatus.OK)
     @ExceptionHandler(BizException.class)
     public String handleTheBizException(BizException e) {
-        log.error("系统发生BizException:{}", e);
+        log.error("系统发生BizException:{}", e.getMessage());
         return e.getMessage();
     }
 
     @ResponseStatus(HttpStatus.OK)
     @ExceptionHandler(Exception.class)
     public Result exceptionHandler(Exception e){
-        log.error("系统发生未知错误:{}", e);
+        log.error("系统发生未知错误:{}", e.getMessage());
         Result result = new Result();
         result.setCode(ResponseCode.SYSTEM_ERROR.getCode());
         result.setMessage(ResponseCode.SYSTEM_ERROR.getMessage());
@@ -57,7 +57,7 @@ public class SystemExceptionHandler {
     @ResponseStatus(HttpStatus.OK)
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public Result httpRequestMethodExceptionHandler(HttpRequestMethodNotSupportedException e){
-        log.error("系统发生请求方式错误:{}", e);
+        log.error("系统发生请求方式错误:{}", e.getMessage());
         Result result = new Result();
         result.setCode(ResponseCode.REQUEST_METHOD_ERROR.getCode());
         result.setMessage(ResponseCode.REQUEST_METHOD_ERROR.getMessage());

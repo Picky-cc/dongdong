@@ -1,6 +1,8 @@
 package com.dongdong.service.impl;
 
+import com.dongdong.annotation.DataSourceSelector;
 import com.dongdong.builder.PersonBuilder;
+import com.dongdong.config.DynamicDateSourceEnum;
 import com.dongdong.consts.ResponseCode;
 import com.dongdong.consts.person.PersonErrorCode;
 import com.dongdong.entity.dao.Person;
@@ -46,7 +48,19 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
+    @DataSourceSelector(DynamicDateSourceEnum.MASTER)
     public PersonDTO getPersonDTO(PersonVO personVO) throws BizException {
+        if (StringUtils.isEmpty(personVO.getPersonUuid())) {
+            throw new BizException(PersonErrorCode.PERSON_UUID_IS_NULL.getCode(),
+                    PersonErrorCode.PERSON_UUID_IS_NULL.getMessage());
+        }
+        Person person = personMapper.selectByUuid(personVO.getPersonUuid());
+        return Objects.isNull(person) ? null : personBuilder.buildDTOByPerson(person);
+    }
+
+    @Override
+    @DataSourceSelector(DynamicDateSourceEnum.SLAVE)
+    public PersonDTO getPersonDTOFromSlave(PersonVO personVO) throws BizException {
         if (StringUtils.isEmpty(personVO.getPersonUuid())) {
             throw new BizException(PersonErrorCode.PERSON_UUID_IS_NULL.getCode(),
                     PersonErrorCode.PERSON_UUID_IS_NULL.getMessage());

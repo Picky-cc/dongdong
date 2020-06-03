@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.util.Objects;
 
+/**
+ * @author zhaodexu
+ */
 @Slf4j
 @RestController
 public class PersonController {
@@ -68,6 +71,24 @@ public class PersonController {
         }
         result.setTimeStamp(Long.toString(System.currentTimeMillis()));
         log.info("{} 接口调用成功, 查询结果:{}", GET_PERSON, JSONObject.toJSON(result));
+        return result;
+    }
+
+    @PostMapping("/api/person/getPersonFromSlave")
+    public Result<PersonDTO> getPersonInfoFromSlave(@RequestBody PersonVO personVO) throws BizException {
+        log.info("{} 从库接口调用开始,入参为:{}", GET_PERSON, JSONObject.toJSON(personVO));
+        Result<PersonDTO> result = new Result<>();
+        PersonDTO personDTO = personService.getPersonDTOFromSlave(personVO);
+        if (Objects.isNull(personDTO)) {
+            result.setCode(ResponseCode.CAN_NOT_FIND.getCode());
+            result.setMessage(ResponseCode.CAN_NOT_FIND.getMessage());
+        } else {
+            result.setData(personDTO);
+            result.setCode(ResponseCode.SUCCESS.getCode());
+            result.setMessage(ResponseCode.SUCCESS.getMessage());
+        }
+        result.setTimeStamp(Long.toString(System.currentTimeMillis()));
+        log.info("{} 从库接口调用成功, 查询结果:{}", GET_PERSON, JSONObject.toJSON(result));
         return result;
     }
 

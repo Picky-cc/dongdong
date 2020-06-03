@@ -1,9 +1,15 @@
 package com.dongdong.entity.enumeration;
 
+import lombok.Getter;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author zhaodexu
+ */
+@Getter
 public enum SexEnum {
 
     MAN("0", "男"),
@@ -18,14 +24,6 @@ public enum SexEnum {
     SexEnum(String code, String value){
         this.code = code;
         this.value = value;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public String getValue() {
-        return value;
     }
 
     public static Map<String, SexEnum> getMap() {

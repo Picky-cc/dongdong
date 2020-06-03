@@ -6,7 +6,7 @@
     <result column="person_uuid" jdbcType="VARCHAR" property="personUuid" />
     <result column="person_name" jdbcType="VARCHAR" property="personName" />
     <result column="id_card_no" jdbcType="VARCHAR" property="idCardNo" />
-    <result column="sex" jdbcType="TINYINT" property="sex" />
+    <result column="sex" jdbcType="TINYINT" property="sex" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler"/>
     <result column="birth_day" jdbcType="TIMESTAMP" property="birthDay" />
     <result column="address" jdbcType="VARCHAR" property="address" />
     <result column="department_uuid" jdbcType="VARCHAR" property="departmentUuid" />

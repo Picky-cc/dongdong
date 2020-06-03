@@ -5,6 +5,9 @@ import java.math.BigDecimal;
 import java.util.Date;
 import lombok.Data;
 
+/**
+ * @author zhaodexu
+ */
 @Data
 public class Person {
     private Long id;
